@@ -1,9 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const apiKey = "6d4c6627";
   const searchInput = document.getElementById("searchInput");
   const movieContainer = document.getElementById("movieContainer");
   searchInput.addEventListener("input", debounce(handleSearch, 0));
 
-  async function handleSearch() {}
+  async function handleSearch() {
+    const searchTerm = searchInput.value;
+    if (searchTerm.trim() !== "") {
+      const movies = await searchMovies(searchTerm);
+      displayMovies(movies);
+    } else {
+      clearMovieContainer();
+    }
+  }
 
   function searchMovies(query) {}
 
@@ -28,5 +37,4 @@ document.addEventListener("DOMContentLoaded", () => {
   async function updateMovieComments(movieId, comments) {}
 
   function createMovieCard(movie) {}
-
 });

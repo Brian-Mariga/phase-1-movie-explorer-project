@@ -49,6 +49,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function fetchMovieDetails(movieId) {
+    const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   function clearMovieContainer() {
     movieContainer.innerHTML = "";
   }
@@ -67,18 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
     card.appendChild(year);
 
     return card;
-  }
-
-  async function fetchMovieDetails(movieId) {
-    const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`;
-
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw error;
-    }
   }
 
   function displayMovieDetails(movieDetails) {
@@ -130,15 +130,74 @@ document.addEventListener("DOMContentLoaded", () => {
     movieContainer.appendChild(commentsContainer);
   }
 
-  async function handleLikeClick(likeButton, movieId) {}
+  async function handleLikeClick(likeButton, movieId) {
+    try {
+      const existingLikes = await fetchMovieLikes(movieId);
+      const updatedLikes = existingLikes + 1;
 
-  async function handleCommentClick(commentInput, movieId) {}
+      await updateMovieLikes(movieId, updatedLikes);
+
+      console.log(`Movie ${movieId} Liked! New Likes: ${updatedLikes}`);
+
+      likeButton.classList.toggle("liked");
+      likeButton.textContent = likeButton.classList.contains("liked")
+        ? "Unlike"
+        : "Like";
+    } catch (error) {
+      console.error("Error handling like:", error);
+    }
+  }
+
+  async function handleCommentClick(commentInput, movieId) {
+    try {
+      const comment = commentInput.value;
+      if (comment.trim() !== "") {
+        const existingComments = await fetchMovieComments(movieId);
+
+        const updatedComments = [...existingComments, comment];
+
+        await updateMovieComments(movieId, updatedComments);
+
+        console.log(`Comment added for Movie ${movieId}: ${comment}`);
+
+        displayComments(updatedComments, movieId);
+      }
+    } catch (error) {
+      console.error("Error handling comment:", error);
+    }
+  }
 
   async function fetchMovieLikes(movieId) {}
 
-  async function updateMovieLikes(movieId, likes) {}
+  async function updateMovieLikes(movieId, likes) {
+    console.log(`Updating likes for Movie ${movieId} to ${likes}`);
+  }
 
-  async function fetchMovieComments(movieId) {}
+  async function fetchMovieComments(movieId) {
+    return [];
+  }
 
-  async function updateMovieComments(movieId, comments) {}
+  async function updateMovieComments(movieId, comments) {
+    console.log(`Updating comments for Movie ${movieId} to`, comments);
+  }
+  function displayComments(comments, movieId) {
+    const commentsContainer = document.getElementById("comments-container");
+    commentsContainer.innerHTML = "";
+
+    comments.forEach((comment) => {
+      const commentElement = document.createElement("p");
+      commentElement.textContent = `Comment: ${comment}`;
+      commentsContainer.appendChild(commentElement);
+    });
+  }
+
+  function debounce(func, delay) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
 });

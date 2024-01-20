@@ -14,21 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function searchMovies(query) {
+  async function searchMovies(query) {
     const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`;
 
-    return fetch(apiUrl)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => data.Search || [])
-      .catch((error) => {
-        console.error("Error fetching movie data:", error);
-        return [];
-      });
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data.Search || [];
+    } catch (error) {
+      console.error("Error fetching movie data:", error);
+      return [];
+    }
   }
 
   function displayMovies(movies) {
@@ -41,7 +40,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  async function handleMovieClick(movieId) {}
+  async function handleMovieClick(movieId) {
+    try {
+      const movieDetails = await fetchMovieDetails(movieId);
+      displayMovieDetails(movieDetails);
+    } catch (error) {
+      console.error("Error fetching movie details:", error);
+    }
+  }
+
+  function clearMovieContainer() {
+    movieContainer.innerHTML = "";
+  }
+
+  function createMovieCard(movie) {
+    const card = document.createElement("div");
+    card.classList.add("movie-card");
+
+    const title = document.createElement("h2");
+    title.textContent = movie.Title;
+
+    const year = document.createElement("p");
+    year.textContent = `Year: ${movie.Year}`;
+
+    card.appendChild(title);
+    card.appendChild(year);
+
+    return card;
+  }
 
   async function fetchMovieDetails(movieId) {}
 
@@ -58,6 +84,4 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchMovieComments(movieId) {}
 
   async function updateMovieComments(movieId, comments) {}
-
-  function createMovieCard(movie) {}
 });

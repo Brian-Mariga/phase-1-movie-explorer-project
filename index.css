@@ -21,19 +21,115 @@ header {
   box-shadow: 0px 0px 10px #041b55, 0px 0px 10px inset;
 }
 
+main {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
+}
+
+#searchInput {
+  height: 20%;
+}
+
+#like-button.liked {
+  background-color: #f40a0a;
+}
+
+#movieContainer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+button#like-button,
+button#comment-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button#comment-button {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+textarea#comment-input {
+  width: 50%;
+  padding: 10px;
+  margin-top: 10px;
+  resize: vertical;
+}
+
+.interaction {
+  display: flex;
+  align-items: center;
+}
+
+button#like-button,
+button#comment-button,
+textarea#comment-input {
+  margin: 0 auto;
+}
+
+#home-images {
+  position: relative;
+  left: 0;
+  background-image: url(https://c4.wallpaperflare.com/wallpaper/822/323/828/spiderman-into-the-spider-verse-2018-movies-movies-spiderman-wallpaper-preview.jpg);
+}
+
 .home-images {
-    display: inline-block;
-    width: 140px;
-    height: 160px;
-    padding: 5px;
-    border-radius: 20px;
-    transition: width 0.3s, height 0.3s, transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .home-images:hover {
-    width: 160px;
-    height: 180px;
-    transform: translateX(22px);
-    box-shadow: 0px 5px 12px #03b9fc, 0px 0px 10px;
-    background: linear-gradient(rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
-  }
+  display: inline-block;
+  width: 140px;
+  height: 160px;
+  padding: 5px;
+  border-radius: 20px;
+  transition: width 0.3s, height 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.home-images:hover {
+  width: 160px;
+  height: 180px;
+  transform: translateX(22px);
+  box-shadow: 0px 5px 12px #03b9fc, 0px 0px 10px;
+  background: linear-gradient(rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+img {
+  border-radius: 20px;
+  transition: width 0.3s, height 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+img:hover {
+  width: 300px;
+  height: 480px;
+  transform: translateX(22px);
+  box-shadow: 0px 5px 12px #03b9fc, 0px 0px 10px;
+  background: linear-gradient(rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.movie-card:hover {
+  cursor: pointer;
+  text-shadow: 0 0 20px #00fffb, 0 0 40px #0081bc;
+}
+
+#movieContainer h2 {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-style: italic;
+}

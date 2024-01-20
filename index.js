@@ -81,7 +81,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function displayMovieDetails(movieDetails) {}
+  function displayMovieDetails(movieDetails) {
+    clearMovieContainer();
+
+    const title = document.createElement("h2");
+    title.textContent = movieDetails.Title;
+
+    const year = document.createElement("p");
+    year.textContent = `Year: ${movieDetails.Year}`;
+
+    const plot = document.createElement("p");
+    plot.textContent = `Plot: ${movieDetails.Plot}`;
+
+    const image = document.createElement("img");
+    image.src = movieDetails.Poster;
+    image.alt = movieDetails.Title;
+
+    const likeButton = document.createElement("button");
+    likeButton.textContent = "Like";
+    likeButton.classList.add("interaction");
+    likeButton.setAttribute("id", "like-button");
+    likeButton.addEventListener("click", () =>
+      handleLikeClick(likeButton, movieDetails.imdbID)
+    );
+
+    const commentInput = document.createElement("textarea");
+    commentInput.placeholder = "Add your comment...";
+    commentInput.classList.add("interaction");
+    commentInput.setAttribute("id", "comment-input");
+
+    const commentButton = document.createElement("button");
+    commentButton.textContent = "Add Comment";
+    commentButton.setAttribute("id", "comment-button");
+    commentButton.classList.add("interaction");
+    commentButton.addEventListener("click", () =>
+      handleCommentClick(commentInput, movieDetails.imdbID)
+    );
+
+    const commentsContainer = document.createElement("div");
+    commentsContainer.setAttribute("id", "comments-container");
+    movieContainer.appendChild(title);
+    movieContainer.appendChild(image);
+    movieContainer.appendChild(year);
+    movieContainer.appendChild(plot);
+    movieContainer.appendChild(likeButton);
+    movieContainer.appendChild(commentInput);
+    movieContainer.appendChild(commentButton);
+    movieContainer.appendChild(commentsContainer);
+  }
 
   async function handleLikeClick(likeButton, movieId) {}
 

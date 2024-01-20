@@ -14,9 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function searchMovies(query) {}
+  function searchMovies(query) {
+    const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&s=${query}`;
 
-  function displayMovies(movies) {}
+    return fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => data.Search || [])
+      .catch((error) => {
+        console.error("Error fetching movie data:", error);
+        return [];
+      });
+  }
+
+  function displayMovies(movies) {
+    clearMovieContainer();
+
+    movies.forEach((movie) => {
+      const movieCard = createMovieCard(movie);
+      movieCard.addEventListener("click", () => handleMovieClick(movie.imdbID));
+      movieContainer.appendChild(movieCard);
+    });
+  }
 
   async function handleMovieClick(movieId) {}
 

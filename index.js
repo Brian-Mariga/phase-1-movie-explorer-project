@@ -69,7 +69,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return card;
   }
 
-  async function fetchMovieDetails(movieId) {}
+  async function fetchMovieDetails(movieId) {
+    const apiUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${movieId}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   function displayMovieDetails(movieDetails) {}
 
